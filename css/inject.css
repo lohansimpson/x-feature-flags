@@ -1,0 +1,110 @@
+.modalBackground {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 999999999;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalIFrame {
+    width: 600px;
+    height: 90%;
+    border-width: 0;
+    border-radius: 16px;
+}
+
+.featuresBtnContainer {
+    width: 100%;
+    border-radius: 100px;
+    padding: 10px 0;
+    box-sizing: border-box;
+    font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.featuresLabel {
+    color: rgb(15, 20, 25);
+    font-size: 15px;
+    font-weight: 500;
+    flex: 1;
+    padding: 10px 13px;
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 10px;
+    transition: all 0.1s;
+}
+
+.featuresLabel:hover {
+    background-color: rgba(15, 20, 25, 0.1); 
+}
+
+.featuresBtnContainer.disabled .featuresLabel {
+    color: rgba(15, 20, 25, 0.4);
+    pointer-events: none;
+    cursor: default;
+}
+
+.featuresBtnContainer.disabled .featuresLabel:hover {
+    background-color: transparent;
+}
+
+.featuresSwitchContainer {
+    margin-right: 7px;
+    height: 20px;
+    width: 40px;
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    user-select: none;
+    position: relative;
+}
+
+.featureSwitchTrack {
+    background-color: rgb(107, 201, 251);
+    height: 14px;
+    width: 100%;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 1;
+    transition: all 0.2s;
+}
+
+.featuresBtnContainer.disabled .featureSwitchTrack{
+    background-color: rgb(147, 147, 147);
+}
+
+.featureSwitchButton {
+    position: absolute;
+    left: calc(100% - 20px);
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: rgb(29, 155, 240);
+    z-index: 50;
+    box-shadow: rgb(0 0 0 / 50%) 0px 1px 3px;
+    transition: all 0.2s;
+}
+
+.featuresBtnContainer.disabled .featureSwitchButton{
+    left: 0px;
+    background-color: white;
+}
+
+.featureSwitchCheckbox {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    z-index: 100;
+    cursor: pointer;
+}
