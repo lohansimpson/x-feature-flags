@@ -1,0 +1,39 @@
+{
+    "name": "Secret Twitter Features",
+    "manifest_version": 3,
+    "version": "1.0.0",
+    "description": "Modifies feature flags on Twitter.com",
+    "permissions": [
+      "storage",
+      "debugger",
+      "tabs"
+    ],
+    "content_scripts": [
+        {
+          "matches": ["https://twitter.com/*"],
+          "css": ["css/inject.css"],
+          "js": ["lib/inject.js"]
+        }
+      ],
+    "host_permissions": [
+      "https://twitter.com/"
+    ],
+    "externally_connectable": {
+      "matches": ["https://twitter.com/*"]
+    },
+    "icons": {
+        "16": "icons/16.png",
+        "32": "icons/32.png",
+        "48": "icons/48.png",
+        "128": "icons/128.png"
+    },
+    "background": {
+      "service_worker": "lib/background.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/ui.html", "lib/ui.js"],
+            "matches": ["https://twitter.com/*"]
+        }
+    ]
+  }
