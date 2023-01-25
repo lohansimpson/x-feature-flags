@@ -9,7 +9,7 @@ To use this extension, will you need:
 * Chrome or Brave browser
 
 
-## Manual installation
+## Manual Installation
 1. Clone this repo to your machine
 2. Open [chrome://extensions/](chrome://extensions/) in your browser
 3. Check the box for Developer mode in the top right
@@ -24,7 +24,7 @@ To determine who can see an upcoming feature, they use a mechanism called "featu
 
 Luckily, with this extension, we can get a full list of the available feature flags and enable them to try new functionality. 
 
-## How to use Secret Features
+## How to Use Secret Features
 When you open a new tab with Twitter, you will see a new item in the menu:
 
 <img src="./docs/menu.png" height="250">
