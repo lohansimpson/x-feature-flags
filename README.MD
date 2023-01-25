@@ -25,19 +25,15 @@ To determine who can see an upcoming feature, they use a mechanism called "featu
 Luckily, with this extension, we can get a full list of the available feature flags and enable them to try new functionality. 
 
 ## How to use Secret Features
-When you open a new tab with Twitter, you will see this item near your account:
+When you open a new tab with Twitter, you will see a new item in the menu:
 
 <img src="./docs/how_to_find.png" height="250">
 
-When you activate it, the browser will enter a "debug" mode and a list of available feature flags will be shown. 
+When you click on it, a list of available feature flags will be shown. 
 
 <img src="./docs/list.png" width="600">
 
 Here you can filter by feature name and modify feature flags. If you want to reset all your changes, press the "Clear State" button in the bottom right. To exit without saving, just click outside the modal.
-
-You can always go back to this list by pressing the "Secret Features" text.
-
-Once you've finished testing the features, you can switch the toggle to "off", to hide the "debugger" warning.
 
 ## Which Feature Flags to Try First
 Because twitter constantly updates its code, the features in testing are also changing. Please follow [@512x512](https://twitter.com/512x512) or [@TitterTakeover](https://twitter.com/TitterTakeover) to learn about the latest features and how to activate them.
