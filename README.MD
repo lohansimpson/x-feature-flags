@@ -31,7 +31,7 @@ When you open a new tab with Twitter, you will see a new item in the menu:
 
 When you click on it, a list of available feature flags will be shown. 
 
-<img src="./docs/list.png" width="600">
+<img src="./docs/features.png" width="600">
 
 Here you can filter by feature name and modify feature flags. If you want to reset all your changes, press the "Clear State" button in the bottom right. To exit without saving, just click outside the modal.
 

@@ -22,14 +22,20 @@ const onMenuAdded = async (container: Element) => {
     if (container) {
         // icon
         const img = document.createElement('img');
-        img.src = chrome.runtime.getURL("assets/tab_icon.svg")
+        const prefersDarkMode = window.matchMedia("(prefers-color-scheme:dark)").matches;
+        img.src = prefersDarkMode ? 
+              chrome.runtime.getURL("assets/tab_icon_dark_theme.svg")
+            : chrome.runtime.getURL("assets/tab_icon.svg");
         img.classList.add('featuresIcon');
 
         // text
         const label = document.createElement('div');
         label.classList.add('featuresLabel');
         label.append(img);
-        label.append('Features');
+
+        const text = document.createElement('span');
+        text.innerText = 'Features';
+        label.append(text);
 
         // Menu element container
         const btnContainer = document.createElement('div');

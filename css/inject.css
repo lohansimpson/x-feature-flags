@@ -30,7 +30,8 @@
 .featuresLabel {
     color: rgb(15, 20, 25);
     font-size: 20px;
-    padding: 12px 28px 12px 16px;
+    padding: 12px 16px;
+    box-sizing: border-box;
     margin-right: 10px;
     border-radius: 100px;
     transition: all 0.1s;
@@ -40,8 +41,9 @@
     align-items: center;
 }
 
-.featuresIcon {
-    margin-right: 20px;
+.featuresLabel span{
+    margin-left: 20px;
+    margin-right: 12px;
 }
 
 .featuresBtnContainer:hover .featuresLabel{
@@ -52,3 +54,18 @@
     background-color: rgba(15, 20, 25, 0.15); 
 }
 
+@media (prefers-color-scheme: dark) { 
+    .featuresLabel {
+        color: white;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .featuresLabel {
+        margin-right: 0;
+    }
+
+    .featuresLabel span {
+      display: none;
+    }
+  }
