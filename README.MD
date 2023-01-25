@@ -27,7 +27,7 @@ Luckily, with this extension, we can get a full list of the available feature fl
 ## How to use Secret Features
 When you open a new tab with Twitter, you will see a new item in the menu:
 
-<img src="./docs/how_to_find.png" height="250">
+<img src="./docs/menu.png" height="250">
 
 When you click on it, a list of available feature flags will be shown. 
 
