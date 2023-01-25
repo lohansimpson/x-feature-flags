@@ -20,91 +20,35 @@
 
 .featuresBtnContainer {
     width: 100%;
-    border-radius: 100px;
-    padding: 10px 0;
-    box-sizing: border-box;
-    font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    border-radius: 100px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
-
 
 .featuresLabel {
     color: rgb(15, 20, 25);
-    font-size: 15px;
-    font-weight: 500;
-    flex: 1;
-    padding: 10px 13px;
-    cursor: pointer;
+    font-size: 20px;
+    padding: 12px 28px 12px 16px;
     margin-right: 10px;
-    border-radius: 10px;
+    border-radius: 100px;
     transition: all 0.1s;
+    display: flex;
+    flex: 0;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.featuresLabel:hover {
+.featuresIcon {
+    margin-right: 20px;
+}
+
+.featuresBtnContainer:hover .featuresLabel{
     background-color: rgba(15, 20, 25, 0.1); 
 }
 
-.featuresBtnContainer.disabled .featuresLabel {
-    color: rgba(15, 20, 25, 0.4);
-    pointer-events: none;
-    cursor: default;
+.featuresBtnContainer:active .featuresLabel{
+    background-color: rgba(15, 20, 25, 0.15); 
 }
 
-.featuresBtnContainer.disabled .featuresLabel:hover {
-    background-color: transparent;
-}
-
-.featuresSwitchContainer {
-    margin-right: 7px;
-    height: 20px;
-    width: 40px;
-    align-items: center;
-    box-sizing: border-box;
-    display: flex;
-    user-select: none;
-    position: relative;
-}
-
-.featureSwitchTrack {
-    background-color: rgb(107, 201, 251);
-    height: 14px;
-    width: 100%;
-    border-radius: 10px;
-    position: absolute;
-    z-index: 1;
-    transition: all 0.2s;
-}
-
-.featuresBtnContainer.disabled .featureSwitchTrack{
-    background-color: rgb(147, 147, 147);
-}
-
-.featureSwitchButton {
-    position: absolute;
-    left: calc(100% - 20px);
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-    background-color: rgb(29, 155, 240);
-    z-index: 50;
-    box-shadow: rgb(0 0 0 / 50%) 0px 1px 3px;
-    transition: all 0.2s;
-}
-
-.featuresBtnContainer.disabled .featureSwitchButton{
-    left: 0px;
-    background-color: white;
-}
-
-.featureSwitchCheckbox {
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    position: absolute;
-    z-index: 100;
-    cursor: pointer;
-}

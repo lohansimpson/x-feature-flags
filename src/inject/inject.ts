@@ -1,28 +1,5 @@
 import { createObserver } from "./dom/createObserver";
 
-const getBreakPointPosition: () => {column: number; line: number} | undefined = () => {
-    const script = [...document.scripts].find((s) => s.innerText.indexOf('window.__INITIAL_STATE__=') > -1)?.innerText;
-
-    if (script) {
-        const html = document.documentElement.outerHTML;
-        const startPoisition = document.documentElement.outerHTML.indexOf(script);
-        const endPosition = startPoisition + script.length;
-
-        const substr = html.substring(0, endPosition);
-        const lineNumber = (substr.match(/\n/g) || []).length;
-        const lastLineStarts = substr.lastIndexOf('\n');
-        const columnNumber = endPosition - lastLineStarts;
-
-
-        return {
-            line: lineNumber,
-            column: columnNumber,
-        }
-    }
-
-    return;
-};
-
 const showModal = () => {
     const background = document.createElement('div');
     background.classList.add('modalBackground');
@@ -41,85 +18,40 @@ const closeModal = () => {
     background?.remove();
 }
 
-const createSwitch = (onClick: () => void) => {
-    const featuresSwitchContainer = document.createElement('div');
-    featuresSwitchContainer.classList.add('featuresSwitchContainer');
-
-    const featureSwitchTrack = document.createElement('div');
-    featureSwitchTrack.classList.add('featureSwitchTrack');
-
-    const featureSwitchButton = document.createElement('div');
-    featureSwitchButton.classList.add('featureSwitchButton');
-
-    const featureSwitchCheckbox = document.createElement('input');
-    featureSwitchCheckbox.setAttribute('type', 'checkbox');
-    featureSwitchCheckbox.classList.add('featureSwitchCheckbox');
-    featureSwitchCheckbox.onclick = onClick;
-
-    featuresSwitchContainer.appendChild(featureSwitchTrack);
-    featuresSwitchContainer.appendChild(featureSwitchButton);
-    featuresSwitchContainer.appendChild(featureSwitchCheckbox);
-
-    return featuresSwitchContainer;
-}
-
-const onMenuAdded = async (userButton: Element) => {
-    const container = userButton?.parentElement?.parentElement;
-
+const onMenuAdded = async (container: Element) => {
     if (container) {
-        // Secret Features text
+        // icon
+        const img = document.createElement('img');
+        img.src = chrome.runtime.getURL("assets/tab_icon.svg")
+        img.classList.add('featuresIcon');
+
+        // text
         const label = document.createElement('div');
         label.classList.add('featuresLabel');
-        label.innerText = 'Secret Features';
-        label.onclick = showModal;
-
-        // Switch
-        const switchEl = createSwitch(async () => {
-            const container = document.querySelector('div.featuresBtnContainer');
-            if (container) {
-                const isEnableFeaturesState = await chrome.storage.local.get('isEnableFeatures');
-                const isEnableFeatures = isEnableFeaturesState.isEnableFeatures ?? false;
-
-                if (isEnableFeatures) {
-                    container.classList.add('disabled');
-                } else {
-                    container.classList.remove('disabled');
-                    const { featureFlagChanges } = await chrome.storage.local.get('featureFlagChanges');
-                    if (!featureFlagChanges || Object.keys(featureFlagChanges).length === 0) {
-                        await chrome.storage.local.set({isShowFeatures: true});
-                    }
-                }
-
-                await chrome.runtime.sendMessage({type: 'isEnableFeatures', value: !isEnableFeatures});
-            }
-        });
+        label.append(img);
+        label.append('Features');
 
         // Menu element container
         const btnContainer = document.createElement('div');
         btnContainer.classList.add('featuresBtnContainer');
+        label.onclick = showModal;
 
-        btnContainer.appendChild(label);
-        btnContainer.appendChild(switchEl);
-
-        const isEnableFeaturesState = await chrome.storage.local.get('isEnableFeatures');
-        const isEnableFeatures = isEnableFeaturesState.isEnableFeatures ?? false;
-        if (!isEnableFeatures) {
-            btnContainer.classList.add('disabled');
-        }
-
-        container.prepend(btnContainer);
-
-        const { isShowFeatures } = await chrome.storage.local.get('isShowFeatures');
-
-        console.log('>>> isShowFeatures', isShowFeatures);
-        if (isShowFeatures) {
-            await chrome.storage.local.set({'isShowFeatures': false});
-            showModal();
-        }
+        btnContainer.append(label);
+        container.insertBefore(btnContainer, container.lastChild);
     }
 }
 
-// waiting for left menu to appear
-const toolbarObserver = createObserver("div[data-testid=\"SideNav_AccountSwitcher_Button\"]", onMenuAdded, () => {});
-const reactRoot = document.querySelector("#react-root") as unknown as Node;
-toolbarObserver.observe(reactRoot, { subtree: true, childList: true });
+localStorage.setItem('stf_extension_id', chrome.runtime.id);
+
+chrome.storage.local.onChanged.addListener((changes) => {
+    if (changes['featureFlagChanges']) {
+        localStorage.setItem('stf_changes', JSON.stringify(changes['featureFlagChanges'].newValue));
+    }
+});
+
+window.onload = () => {
+    // waiting for left menu to appear
+    const toolbarObserver = createObserver("nav[role=\"navigation\"][aria-label=\"Primary\"]", onMenuAdded, () => {});
+    const reactRoot = document.querySelector("#react-root") as unknown as Node;
+    toolbarObserver.observe(reactRoot, { subtree: true, childList: true });
+}
