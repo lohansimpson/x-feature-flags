@@ -6,7 +6,7 @@ Enable upcoming Twitter features before their official release.
 ## Requirements
 To use this extension, will you need:
 * Twitter account
-* Chrome browser
+* Chrome or Brave browser
 
 
 ## Manual installation
