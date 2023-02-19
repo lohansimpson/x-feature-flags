@@ -54,10 +54,8 @@
     background-color: rgba(15, 20, 25, 0.15); 
 }
 
-@media (prefers-color-scheme: dark) { 
-    .featuresLabel {
-        color: white;
-    }
+.featuresLabel.dark {
+    color: white;
 }
 
 @media only screen and (max-width: 1300px) {
