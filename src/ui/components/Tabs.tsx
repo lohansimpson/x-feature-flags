@@ -5,16 +5,17 @@ export type TabNames = 'all' | 'changed';
 type Props = {
     selectedTab: TabNames;
     onChange: (newTab: TabNames) => void;
+    allCount: number;
     changedCount: number;
 }
-export const Tabs: FC<Props> = ({ selectedTab, onChange, changedCount }) => {
+export const Tabs: FC<Props> = ({ selectedTab, onChange, allCount, changedCount }) => {
     return (
         <Container>
             <Tab onClick={() => onChange('all')}>
-                <TabLabel selected={selectedTab === 'all'}>Features</TabLabel>
+                <TabLabel selected={selectedTab === 'all'}>Features <CountLabel>&nbsp;{allCount}</CountLabel></TabLabel>
             </Tab>
             <Tab onClick={() => onChange('changed')}>
-                <TabLabel selected={selectedTab === 'changed'}>Changes Only ({changedCount})</TabLabel>
+                <TabLabel selected={selectedTab === 'changed'}>Changes Only <CountLabel>&nbsp;{changedCount}</CountLabel></TabLabel>
             </Tab>
         </Container>
     )
@@ -46,6 +47,7 @@ const TabLabel = styled.div<{selected: boolean}>`
     font-size: 14px;
     font-weight: 500;
     height: 100%;
+    padding: 0 10px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -56,4 +58,9 @@ const TabLabel = styled.div<{selected: boolean}>`
     `:`
         color: rgb(83, 100, 113);
     `}
+`
+
+const CountLabel = styled.span`
+    color: rgba(0,0,0,0.3);
+    margin-left: 5px;
 `

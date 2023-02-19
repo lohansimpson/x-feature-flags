@@ -20,6 +20,7 @@ chrome.scripting.registerContentScripts([
 // listening for messages
 chrome.runtime.onMessage.addListener(
     async (request, sender, sendResponse) => {
+        console.log('>>>', request.type);
         switch(request.type) {
             case 'saveFeatureFlagChanges':
                 await chrome.storage.local.set({featureFlagChanges: request.value});
@@ -27,6 +28,14 @@ chrome.runtime.onMessage.addListener(
                 setTimeout(async () => {
                     await chrome.tabs.reload();
                 }, 200);
+                break;
+            case 'getFlagsFromRemote':
+                try {
+                    const json = await (await fetch('https://twitter-feature-flags.web.app/flags.json', { cache: 'no-store' })).json();
+                    await chrome.storage.local.set({featureFlagsFromRemote: json});
+                } catch (e) {
+                    console.error(e);
+                }
                 break;
             case 'reload':
                 await chrome.tabs.reload();
