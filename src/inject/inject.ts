@@ -18,8 +18,14 @@ const closeModal = () => {
     background?.remove();
 }
 
-const onMenuAdded = async (container: Element) => {
-    if (container) {
+const onMenuAdded = async (prevElement: Element) => {
+    if (prevElement) {
+        const alreadyExists = !!prevElement.parentElement!.querySelector(".featuresBtnContainer");
+
+        if (alreadyExists) {
+            return;
+        }
+
         // icon
         const img = document.createElement('img');
         const prefersDarkMode = window.matchMedia("(prefers-color-scheme:dark)").matches;
@@ -31,6 +37,9 @@ const onMenuAdded = async (container: Element) => {
         // text
         const label = document.createElement('div');
         label.classList.add('featuresLabel');
+        if (prefersDarkMode) {
+            label.classList.add('dark');
+        }
         label.append(img);
 
         const text = document.createElement('span');
@@ -43,7 +52,7 @@ const onMenuAdded = async (container: Element) => {
         label.onclick = showModal;
 
         btnContainer.append(label);
-        container.insertBefore(btnContainer, container.lastChild);
+        prevElement.after(btnContainer);
     }
 }
 
@@ -55,9 +64,16 @@ chrome.storage.local.onChanged.addListener((changes) => {
     }
 });
 
+const menuSelector = "a[data-testid=\"AppTabBar_Profile_Link\"]";
+
 window.onload = () => {
     // waiting for left menu to appear
-    const toolbarObserver = createObserver("nav[role=\"navigation\"][aria-label=\"Primary\"]", onMenuAdded, () => {});
+    const toolbarObserver = createObserver(menuSelector, onMenuAdded, () => {});
     const reactRoot = document.querySelector("#react-root") as unknown as Node;
     toolbarObserver.observe(reactRoot, { subtree: true, childList: true });
+}
+
+const currentContainer = document.querySelector(menuSelector);
+if (currentContainer) {
+    onMenuAdded(currentContainer);
 }

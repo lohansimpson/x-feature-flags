@@ -11,12 +11,20 @@ export const FeatureFlagsScreen: FC<{}> = () => {
     const [selectedTab, setSelectedTab] = useState<TabNames>('all');
 
     const [featureFlags, setFeatureFlags] = useState<Record<string, any>>({});
+    const [featureFlagsFromRemote, setFeatureFlagsFromRemote] = useState<Record<string, any>>({});
+
     const [changes, setChanges] = useState<Record<string, any>>({});
 
     useEffect(() => {
         chrome.storage.local.get('featureFlags').then((res) => {
             if (res.featureFlags) {
                 setFeatureFlags(res.featureFlags);
+            };
+        });
+
+        chrome.storage.local.get('featureFlagsFromRemote').then((res) => {
+            if (res.featureFlagsFromRemote) {
+                setFeatureFlagsFromRemote(res.featureFlagsFromRemote);
             };
         });
 
@@ -30,6 +38,9 @@ export const FeatureFlagsScreen: FC<{}> = () => {
             if (changes['featureFlags']) {
                 setFeatureFlags(changes['featureFlags'].newValue || {});
             }
+            if (changes['featureFlagsFromRemote']) {
+                setFeatureFlagsFromRemote(changes['featureFlagsFromRemote'].newValue || {});
+            }
             if (changes['featureFlagChanges']) {
                 setChanges(changes['featureFlagChanges'].newValue || {});
             }
@@ -37,13 +48,17 @@ export const FeatureFlagsScreen: FC<{}> = () => {
 
         chrome.storage.local.onChanged.addListener(listener);
 
+        chrome.runtime.sendMessage({type: 'getFlagsFromRemote'});
+
         return () => chrome.storage.local.onChanged.removeListener(listener);
     }, []);
+
+    const flags = useMemo(() => ({...featureFlagsFromRemote, ...featureFlags}), [featureFlags, featureFlagsFromRemote])
 
     const onValueChange = useCallback(async (name: string, newValue: any) => {
         let newFeatureFlagChanges: Record<string, any> = {};
         
-        if (featureFlags[name]?.value === newValue) {
+        if (flags[name]?.value === newValue) {
             newFeatureFlagChanges = {...changes};
             delete newFeatureFlagChanges[name];
         } else {
@@ -54,29 +69,43 @@ export const FeatureFlagsScreen: FC<{}> = () => {
         }
 
         setChanges(newFeatureFlagChanges);
-    }, [featureFlags, changes]);
+    }, [flags, changes]);
 
     const onSave = useCallback(async () => {
         await chrome.runtime.sendMessage({type: 'saveFeatureFlagChanges', value: changes});
     }, [changes]);
 
-    const shownFeatureFlags = useMemo(() => Object.keys(featureFlags).reduce((acc, ffname) => {
+    const shownAllFeatureFlags = useMemo(() => Object.keys(flags).reduce((acc, ffname) => {
         const isSatisfySearch = !search || ffname.indexOf(search) > -1;
-        const isShowInTab = selectedTab === 'all' || !!changes[ffname];
 
-        if (isShowInTab && isSatisfySearch) {
-            return {...acc, [ffname]: featureFlags[ffname]}
+        if (isSatisfySearch) {
+            return {...acc, [ffname]: flags[ffname]}
         } else {
             return acc;
         }
-    }, {}), [search, selectedTab, featureFlags, changes]);
+    }, {}), [search, selectedTab, flags, changes]);
+
+    const shownSelectedFeatureFlags = useMemo(() => Object.keys(flags).reduce((acc, ffname) => {
+        const isSatisfySearch = !search || ffname.indexOf(search) > -1;
+
+        if (!!changes[ffname] && isSatisfySearch) {
+            return {...acc, [ffname]: flags[ffname]}
+        } else {
+            return acc;
+        }
+    }, {}), [search, selectedTab, flags, changes]);
+
+
+    const shownFeatureFlags = selectedTab === 'all' ? shownAllFeatureFlags : shownSelectedFeatureFlags;
+
 
     return (
         <Container>
             <Header style={{borderBottom: "1px solid rgba(0,0,0,0.05);"}}>
                 <Search initialValue={search} onChange={setSearch}/>
                 <Tabs
-                    changedCount={Object.keys(changes).length}
+                    allCount={Object.keys(shownAllFeatureFlags).length}
+                    changedCount={Object.keys(shownSelectedFeatureFlags).length}
                     selectedTab={selectedTab}
                     onChange={setSelectedTab}
                 />

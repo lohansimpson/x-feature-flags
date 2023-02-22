@@ -8,6 +8,9 @@ To use this extension, will you need:
 * Twitter account
 * Chrome or Brave browser
 
+## Installation from Chrome Web Store
+1. Open the [extension page](https://chrome.google.com/webstore/detail/secret-twitter-features/phioeneleonlckednejcmajbkmhhiepm?hl=en-GB&authuser=0) in Chrome Web Store.
+2. Press "Add to Chrome" button
 
 ## Manual Installation
 1. Clone this repo to your machine

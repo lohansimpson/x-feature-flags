@@ -28,6 +28,14 @@ chrome.runtime.onMessage.addListener(
                     await chrome.tabs.reload();
                 }, 200);
                 break;
+            case 'getFlagsFromRemote':
+                try {
+                    const json = await (await fetch('https://twitter-feature-flags.web.app/flags.json', { cache: 'no-store' })).json();
+                    await chrome.storage.local.set({featureFlagsFromRemote: json});
+                } catch (e) {
+                    console.error(e);
+                }
+                break;
             case 'reload':
                 await chrome.tabs.reload();
                 break;
