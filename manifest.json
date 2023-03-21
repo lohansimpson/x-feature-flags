@@ -1,12 +1,11 @@
 {
     "name": "Secret Twitter Features",
     "manifest_version": 3,
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Modifies feature flags on Twitter.com",
     "permissions": [
       "storage",
-      "scripting",
-      "tabs"
+      "scripting"
     ],
     "host_permissions": [
       "https://twitter.com/"
