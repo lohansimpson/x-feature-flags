@@ -19,41 +19,39 @@ const closeModal = () => {
 }
 
 const onMenuAdded = async (prevElement: Element) => {
-    if (prevElement) {
-        const alreadyExists = !!prevElement.parentElement!.querySelector(".featuresBtnContainer");
+    const alreadyExists = !!prevElement.parentElement!.querySelector(".featuresBtnContainer");
 
-        if (alreadyExists) {
-            return;
-        }
-
-        // icon
-        const img = document.createElement('img');
-        const prefersDarkMode = window.matchMedia("(prefers-color-scheme:dark)").matches;
-        img.src = prefersDarkMode ? 
-              chrome.runtime.getURL("assets/tab_icon_dark_theme.svg")
-            : chrome.runtime.getURL("assets/tab_icon.svg");
-        img.classList.add('featuresIcon');
-
-        // text
-        const label = document.createElement('div');
-        label.classList.add('featuresLabel');
-        if (prefersDarkMode) {
-            label.classList.add('dark');
-        }
-        label.append(img);
-
-        const text = document.createElement('span');
-        text.innerText = 'Features';
-        label.append(text);
-
-        // Menu element container
-        const btnContainer = document.createElement('div');
-        btnContainer.classList.add('featuresBtnContainer');
-        label.onclick = showModal;
-
-        btnContainer.append(label);
-        prevElement.after(btnContainer);
+    if (alreadyExists) {
+        return;
     }
+
+    // icon
+    const img = document.createElement('img');
+    const prefersDarkMode = window.matchMedia("(prefers-color-scheme:dark)").matches;
+    img.src = prefersDarkMode ? 
+            chrome.runtime.getURL("assets/tab_icon_dark_theme.svg")
+        : chrome.runtime.getURL("assets/tab_icon.svg");
+    img.classList.add('featuresIcon');
+
+    // text
+    const label = document.createElement('div');
+    label.classList.add('featuresLabel');
+    if (prefersDarkMode) {
+        label.classList.add('dark');
+    }
+    label.append(img);
+
+    const text = document.createElement('span');
+    text.innerText = 'Features';
+    label.append(text);
+
+    // Menu element container
+    const btnContainer = document.createElement('div');
+    btnContainer.classList.add('featuresBtnContainer');
+    label.onclick = showModal;
+
+    btnContainer.append(label);
+    prevElement.after(btnContainer);
 }
 
 localStorage.setItem('stf_extension_id', chrome.runtime.id);
@@ -71,9 +69,9 @@ window.onload = () => {
     const toolbarObserver = createObserver(menuSelector, onMenuAdded, () => {});
     const reactRoot = document.querySelector("#react-root") as unknown as Node;
     toolbarObserver.observe(reactRoot, { subtree: true, childList: true });
-}
 
-const currentContainer = document.querySelector(menuSelector);
-if (currentContainer) {
-    onMenuAdded(currentContainer);
+    const currentContainer = document.querySelector(menuSelector);
+    if (currentContainer) {
+        onMenuAdded(currentContainer);
+    }
 }
