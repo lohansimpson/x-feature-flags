@@ -1,21 +1,25 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 
-export type TabNames = 'all' | 'changed';
+export type TabNames = 'all' | 'changed' | 'subscriptions';
 type Props = {
     selectedTab: TabNames;
     onChange: (newTab: TabNames) => void;
     allCount: number;
     changedCount: number;
+    subscriptionsCount: number;
 }
-export const Tabs: FC<Props> = ({ selectedTab, onChange, allCount, changedCount }) => {
+export const Tabs: FC<Props> = ({ selectedTab, onChange, allCount, changedCount, subscriptionsCount }) => {
     return (
         <Container>
             <Tab onClick={() => onChange('all')}>
-                <TabLabel selected={selectedTab === 'all'}>Features <CountLabel>&nbsp;{allCount}</CountLabel></TabLabel>
+                <TabLabel selected={selectedTab === 'all'}>Feature Flags <CountLabel>&nbsp;{allCount}</CountLabel></TabLabel>
             </Tab>
             <Tab onClick={() => onChange('changed')}>
-                <TabLabel selected={selectedTab === 'changed'}>Changes Only <CountLabel>&nbsp;{changedCount}</CountLabel></TabLabel>
+                <TabLabel selected={selectedTab === 'changed'}>Changed Flags <CountLabel>&nbsp;{changedCount}</CountLabel></TabLabel>
+            </Tab>
+            <Tab onClick={() => onChange('subscriptions')}>
+                <TabLabel selected={selectedTab === 'subscriptions'}>Subscriptions <CountLabel>&nbsp;{subscriptionsCount}</CountLabel></TabLabel>
             </Tab>
         </Container>
     )

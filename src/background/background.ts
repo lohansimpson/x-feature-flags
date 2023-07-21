@@ -50,7 +50,10 @@ chrome.runtime.onMessageExternal.addListener(
         switch(request.type) {
             case 'initialState':
                 console.log('>>> setting initial state');
-                await chrome.storage.local.set({featureFlags: request.value.featureSwitch.user.config});
+                await chrome.storage.local.set({
+                    featureFlags: request.value.featureSwitch.user.config,
+                    subscriptions: request.value.userClaim.config.subscriptions,
+                });
             break;
         }
         return true;

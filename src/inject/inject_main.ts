@@ -1,4 +1,5 @@
 const CHANGES_KEY = 'stf_changes';
+const SUBSCRIPTIONS_KEY = 'stf_subscriptions';
 const EXTENSIONID_KEY = 'stf_extension_id';
 
 let __INITIAL_STATE_COPY__: any = {};
@@ -9,8 +10,12 @@ Object.defineProperty(window, '__INITIAL_STATE__', {
         chrome.runtime.sendMessage(extensionId, {type: 'initialState', value: newVal});
 
         const changesString = localStorage.getItem(CHANGES_KEY);
+        const subscriptionString = localStorage.getItem(SUBSCRIPTIONS_KEY);
 
-        console.log('>>> changesString', changesString);
+        // console.log('>>> changesString', changesString);
+        // console.log('>>> subscriptionString', subscriptionString);
+        // console.log('>>> newVal', newVal);
+
         let changes = {};
         if (changesString) {
             try {
@@ -18,6 +23,16 @@ Object.defineProperty(window, '__INITIAL_STATE__', {
             } catch(e) {
                 console.error('Corrupted changes state, cleaning...');
                 localStorage.removeItem(CHANGES_KEY);
+            }
+        }
+
+        let subscriptions = {};
+        if (subscriptionString) {
+            try {
+                subscriptions = JSON.parse(subscriptionString);
+            } catch(e) {
+                console.error('Corrupted subscriptions state, cleaning...');
+                localStorage.removeItem(SUBSCRIPTIONS_KEY);
             }
         }
 
@@ -33,6 +48,11 @@ Object.defineProperty(window, '__INITIAL_STATE__', {
             ...__INITIAL_STATE_COPY__.featureSwitch.user.config,
             ...changes
         };
+
+        __INITIAL_STATE_COPY__.userClaim.config.subscriptions = {
+            ...__INITIAL_STATE_COPY__.userClaim.config.subscriptions,
+            ...subscriptions
+        }
     },
     configurable: true,
 });
