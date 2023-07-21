@@ -39,6 +39,11 @@ export const FeatureFlagsScreen: FC<{}> = () => {
             type: "saveFeatureFlagChanges",
             value: flagsChanges,
         });
+        await chrome.runtime.sendMessage({
+            type: "saveSubscriptionChanges",
+            value: subscriptionsChanges,
+        });
+        await chrome.runtime.sendMessage({ type: "reload" });
     }, [flagsChanges]);
 
     let content: ReactNode = null;
