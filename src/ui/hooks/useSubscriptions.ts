@@ -10,8 +10,19 @@ type Return = {
     changeSubscription: (name: string, value: any) => void;
 };
 
+export type SubscriptionMap = Record<string, boolean>;
+
 export const useSubscriptions = ({ search }: Props): Return => {
-    const [subscriptions, setSubscriptions] = useState<Record<string, any>>({});
+    const [subscriptions, setSubscriptions] = useState<SubscriptionMap>({});
+    const [subscriptionsFromRemote, setSubscriptionsFromRemote] = useState<
+        Record<string, boolean>
+    >({});
+
+    const allSubscriptions = {
+        ...subscriptionsFromRemote,
+        ...subscriptions,
+    };
+
     const [changes, setChanges] = useState<Record<string, any>>({});
 
     useEffect(() => {
@@ -21,9 +32,15 @@ export const useSubscriptions = ({ search }: Props): Return => {
             }
         });
 
+        chrome.storage.local.get("subscriptionsFromRemote").then((res) => {
+            if (res.subscriptionsFromRemote) {
+                setSubscriptionsFromRemote(res.subscriptionsFromRemote);
+            }
+        });
+
         chrome.storage.local.get("subscriptionsChanges").then((res) => {
-            if (res.subscriptionChanges) {
-                setChanges(res.subscriptionChanges);
+            if (res.subscriptionsChanges) {
+                setChanges(res.subscriptionsChanges);
             }
         });
 
@@ -31,7 +48,12 @@ export const useSubscriptions = ({ search }: Props): Return => {
             changes: Record<string, chrome.storage.StorageChange>
         ) => {
             if (changes["subscriptions"]) {
-                setSubscriptions(changes["featureFlags"].newValue || {});
+                setSubscriptions(changes["subscriptions"].newValue || {});
+            }
+            if (changes["subscriptionsFromRemote"]) {
+                setSubscriptionsFromRemote(
+                    changes["subscriptionsFromRemote"].newValue || {}
+                );
             }
             if (changes["subscriptionsChanges"]) {
                 setChanges(changes["subscriptionsChanges"].newValue || {});
@@ -47,23 +69,26 @@ export const useSubscriptions = ({ search }: Props): Return => {
 
     const shownSubscriptions = useMemo(
         () =>
-            Object.keys(subscriptions).reduce((acc, sname) => {
+            Object.keys(allSubscriptions).reduce((acc, sname) => {
                 const isSatisfySearch = !search || sname.indexOf(search) > -1;
 
                 if (isSatisfySearch) {
-                    return { ...acc, [sname]: subscriptions[sname] };
+                    return {
+                        ...acc,
+                        [sname]: { value: allSubscriptions[sname] },
+                    };
                 } else {
                     return acc;
                 }
             }, {}),
-        [search, subscriptions]
+        [search, allSubscriptions]
     );
 
     const onValueChange = useCallback(
-        async (name: string, newValue: any) => {
+        (name: string, newValue: any) => {
             let newSubscriptionsChanges: Record<string, any> = {};
 
-            if (subscriptions[name]?.value === newValue) {
+            if (allSubscriptions[name] === newValue) {
                 newSubscriptionsChanges = { ...changes };
                 delete newSubscriptionsChanges[name];
             } else {
@@ -75,7 +100,7 @@ export const useSubscriptions = ({ search }: Props): Return => {
 
             setChanges(newSubscriptionsChanges);
         },
-        [subscriptions, changes]
+        [allSubscriptions, changes]
     );
 
     return {

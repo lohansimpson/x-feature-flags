@@ -17,6 +17,7 @@ chrome.scripting.registerContentScripts([
 
 // listening for messages
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+    console.log(">>> request", request);
     switch (request.type) {
         case "saveFeatureFlagChanges":
             await chrome.storage.local.set({
@@ -50,13 +51,20 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             break;
         case "getSubscriptionsFromRemote":
             try {
-                const json = await (
+                const json: Array<{ name: string; value: string }> = await (
                     await fetch(
                         "https://twitter-feature-flags.web.app/subscriptions.json",
                         { cache: "no-store" }
                     )
                 ).json();
-                await chrome.storage.local.set({ subscriptions: json });
+
+                const subFromRemoteMap = json.reduce((acc, sub) => {
+                    return { ...acc, [sub.name]: sub.value === "true" };
+                }, {} as Record<string, any>);
+
+                await chrome.storage.local.set({
+                    subscriptionsFromRemote: subFromRemoteMap,
+                });
             } catch (e) {
                 console.error(e);
             }
@@ -74,8 +82,22 @@ chrome.runtime.onMessageExternal.addListener(
         switch (request.type) {
             case "initialState":
                 console.log(">>> setting initial state");
+
+                const subscriptionsRaw =
+                    request.value.userClaim.config.subscriptions;
+                const subscriptionsMap = Object.keys(subscriptionsRaw).reduce(
+                    (acc, key) => {
+                        return {
+                            ...acc,
+                            [key]: subscriptionsRaw[key].value === "true",
+                        };
+                    },
+                    {} as Record<string, boolean>
+                );
+
                 await chrome.storage.local.set({
                     featureFlags: request.value.featureSwitch.user.config,
+                    subscriptions: subscriptionsMap,
                 });
                 break;
         }

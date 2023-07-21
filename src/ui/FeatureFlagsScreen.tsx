@@ -34,17 +34,17 @@ export const FeatureFlagsScreen: FC<{}> = () => {
         changeSubscription,
     } = useSubscriptions({ search });
 
-    const onSave = useCallback(async () => {
-        await chrome.runtime.sendMessage({
+    const onSave = () => {
+        chrome.runtime.sendMessage({
             type: "saveFeatureFlagChanges",
             value: flagsChanges,
         });
-        await chrome.runtime.sendMessage({
-            type: "saveSubscriptionChanges",
+        chrome.runtime.sendMessage({
+            type: "saveSubscriptionsChanges",
             value: subscriptionsChanges,
         });
-        await chrome.runtime.sendMessage({ type: "reload" });
-    }, [flagsChanges]);
+        chrome.runtime.sendMessage({ type: "reload" });
+    };
 
     let content: ReactNode = null;
 
