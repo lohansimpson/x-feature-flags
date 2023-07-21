@@ -5,7 +5,8 @@
     "description": "Modifies feature flags on Twitter.com",
     "permissions": [
       "storage",
-      "scripting"
+      "scripting",
+      "declarativeNetRequestWithHostAccess"
     ],
     "host_permissions": [
       "https://twitter.com/"
