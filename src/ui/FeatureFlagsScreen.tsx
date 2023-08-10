@@ -14,10 +14,16 @@ import { Search } from "./components/Search";
 import { TabNames, Tabs } from "./components/Tabs";
 import { useFlags } from "./hooks/useFlags";
 import { useSubscriptions } from "./hooks/useSubscriptions";
+import { UsageWarning } from "./components/UsageWarning";
+import { useStorageState } from "./hooks/useStorageState";
 
 export const FeatureFlagsScreen: FC<{}> = () => {
     const [search, setSearch] = useState("");
     const [selectedTab, setSelectedTab] = useState<TabNames>("all");
+    const [isWarningConfirmed, setWarningConfirmed] = useStorageState<boolean>(
+        "isWarningConfirmed",
+        false
+    );
 
     const {
         shownFlags,
@@ -47,6 +53,10 @@ export const FeatureFlagsScreen: FC<{}> = () => {
     };
 
     let content: ReactNode = null;
+
+    if (!isWarningConfirmed) {
+        return <UsageWarning onConfirm={() => setWarningConfirmed(true)} />;
+    }
 
     switch (selectedTab) {
         case "all":
@@ -98,5 +108,6 @@ export const FeatureFlagsScreen: FC<{}> = () => {
 
 const onClear = async () => {
     await chrome.storage.local.clear();
+    await chrome.storage.local.set({ isWarningConfirmed: true }); // can't clear if you haven't accepted it before
     await chrome.runtime.sendMessage({ type: "reload" });
 };
