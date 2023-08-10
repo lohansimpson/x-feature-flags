@@ -15,20 +15,6 @@ chrome.scripting.registerContentScripts([
     },
 ]);
 
-// changing claims
-// chrome.declarativeNetRequest.updateSessionRules({
-//     addRules: [
-//         {
-//             id: 1,
-//             priority: 1,
-//             action: { type: chrome.declarativeNetRequest.RuleActionType.BLOCK },
-//             condition: {
-//                 urlFilter: "*://twitter.com/i/api/graphql/*/GetUserClaims*",
-//             },
-//         },
-//     ],
-//     removeRuleIds: [1],
-// });
 // listening for messages
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     console.log(">>> request", request);

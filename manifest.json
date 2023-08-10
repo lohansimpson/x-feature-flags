@@ -1,18 +1,18 @@
 {
-    "name": "Secret Twitter Features",
+    "name": "X / Twitter Feature Flags",
     "manifest_version": 3,
     "version": "1.0.1",
-    "description": "Modifies feature flags on Twitter.com",
+    "description": "Modifies feature flags on X.com / Twitter.com",
     "permissions": [
       "storage",
-      "scripting",
-      "declarativeNetRequestWithHostAccess"
+      "scripting"
     ],
     "host_permissions": [
-      "https://twitter.com/"
+      "https://twitter.com/",
+      "https://x.com/"
     ],
     "externally_connectable": {
-      "matches": ["https://twitter.com/*"]
+      "matches": ["https://twitter.com/*", "https://x.com/*"]
     },
     "icons": {
         "16": "icons/16.png",
@@ -26,7 +26,7 @@
     "web_accessible_resources": [
         {
             "resources": ["assets/ui.html", "assets/tab_icon.svg", "assets/tab_icon_dark_theme.svg", "lib/ui.js"],
-            "matches": ["https://twitter.com/*"]
+            "matches": ["https://twitter.com/*", "https://x.com/*"]
         }
     ]
   }

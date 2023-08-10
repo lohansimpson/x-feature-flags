@@ -1,7 +1,7 @@
 {
-  "name": "twitter-feature-flags",
+  "name": "x-feature-flags",
   "version": "1.0.0",
-  "description": "A chrome extension to modify feature flags on Twitter.com",
+  "description": "A chrome extension to modify feature flags on X.com",
   "main": "lib/background.js",
   "author": "Yaroslav https://twitter.com/512x512",
   "license": "MIT",
