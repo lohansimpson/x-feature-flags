@@ -1,26 +1,39 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 
-export type TabNames = 'all' | 'changed';
+export type TabNames = "all" | "changed" | "subscriptions";
 type Props = {
     selectedTab: TabNames;
     onChange: (newTab: TabNames) => void;
     allCount: number;
     changedCount: number;
-}
-export const Tabs: FC<Props> = ({ selectedTab, onChange, allCount, changedCount }) => {
+    subscriptionsCount: number;
+};
+export const Tabs: FC<Props> = ({
+    selectedTab,
+    onChange,
+    allCount,
+    changedCount,
+    subscriptionsCount,
+}) => {
     return (
         <Container>
-            <Tab onClick={() => onChange('all')}>
-                <TabLabel selected={selectedTab === 'all'}>Features <CountLabel>&nbsp;{allCount}</CountLabel></TabLabel>
+            <Tab onClick={() => onChange("all")}>
+                <TabLabel selected={selectedTab === "all"}>
+                    Feature Flags <CountLabel>&nbsp;{allCount}</CountLabel>
+                </TabLabel>
             </Tab>
-            <Tab onClick={() => onChange('changed')}>
-                <TabLabel selected={selectedTab === 'changed'}>Changes Only <CountLabel>&nbsp;{changedCount}</CountLabel></TabLabel>
+            <Tab onClick={() => onChange("changed")}>
+                <TabLabel selected={selectedTab === "changed"}>
+                    Changed Flags <CountLabel>&nbsp;{changedCount}</CountLabel>
+                </TabLabel>
             </Tab>
+            {/* <Tab onClick={() => onChange('subscriptions')}>
+                <TabLabel selected={selectedTab === 'subscriptions'}>Subscriptions <CountLabel>&nbsp;{subscriptionsCount}</CountLabel></TabLabel>
+            </Tab> */}
         </Container>
-    )
-}
-
+    );
+};
 
 const Container = styled.div`
     padding-top: 5px;
@@ -39,11 +52,11 @@ const Tab = styled.div`
     align-items: center;
 
     &:hover {
-        background-color: rgba(15,20,25,0.1);
+        background-color: rgba(15, 20, 25, 0.1);
     }
 `;
 
-const TabLabel = styled.div<{selected: boolean}>`
+const TabLabel = styled.div<{ selected: boolean }>`
     font-size: 14px;
     font-weight: 500;
     height: 100%;
@@ -52,15 +65,18 @@ const TabLabel = styled.div<{selected: boolean}>`
     display: flex;
     justify-content: center;
     align-items: center;
-    ${props => props.selected ? `
+    ${(props) =>
+        props.selected
+            ? `
         color: black;
         border-bottom: 3px solid rgb(29,155,240);
-    `:`
+    `
+            : `
         color: rgb(83, 100, 113);
     `}
-`
+`;
 
 const CountLabel = styled.span`
-    color: rgba(0,0,0,0.3);
+    color: rgba(0, 0, 0, 0.3);
     margin-left: 5px;
-`
+`;
