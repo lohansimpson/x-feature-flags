@@ -8,8 +8,8 @@
   "scripts": {
     "build": "yarn clean && webpack",
     "watch": "yarn clean && webpack -w",
-    "clean": "rm -rf ./lib/*",
-    "package": "rm -f ./extension.zip && yarn build && zip -r -X extension.zip *"
+    "clean": "rm -rf ./extension/lib/*",
+    "package": "rm -f ./extension.zip && yarn build && zip -r -X extension.zip ./extension/*"
   },
   "dependencies": {
     "react": "^18.2.0",

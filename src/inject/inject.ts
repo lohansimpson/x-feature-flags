@@ -33,8 +33,8 @@ const onMenuAdded = async (prevElement: Element) => {
         "(prefers-color-scheme:dark)"
     ).matches;
     img.src = prefersDarkMode
-        ? chrome.runtime.getURL("assets/tab_icon_dark_theme.svg")
-        : chrome.runtime.getURL("assets/tab_icon.svg");
+        ? chrome.runtime.getURL("assets/icons/tab_icon_dark_theme.svg")
+        : chrome.runtime.getURL("assets/icons/tab_icon.svg");
     img.classList.add("featuresIcon");
 
     // text
