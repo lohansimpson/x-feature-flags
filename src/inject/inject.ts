@@ -62,16 +62,24 @@ localStorage.setItem("stf_extension_id", chrome.runtime.id);
 
 chrome.storage.local.onChanged.addListener((changes) => {
     if (changes["featureFlagChanges"]) {
-        localStorage.setItem(
-            "stf_changes",
-            JSON.stringify(changes["featureFlagChanges"].newValue)
-        );
+        if (!changes["featureFlagChanges"].newValue) {
+            localStorage.removeItem("stf_changes");
+        } else {
+            localStorage.setItem(
+                "stf_changes",
+                JSON.stringify(changes["featureFlagChanges"].newValue)
+            );
+        }
     }
     if (changes["subscriptionsChanges"]) {
-        localStorage.setItem(
-            "stf_subscriptions",
-            JSON.stringify(changes["subscriptionsChanges"].newValue)
-        );
+        if (!changes["subscriptionsChanges"].newValue) {
+            localStorage.removeItem("stf_subscriptions");
+        } else {
+            localStorage.setItem(
+                "stf_subscriptions",
+                JSON.stringify(changes["subscriptionsChanges"].newValue)
+            );
+        }
     }
 });
 
