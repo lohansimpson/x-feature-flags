@@ -20,10 +20,8 @@ import { useStorageState } from "./hooks/useStorageState";
 export const FeatureFlagsScreen: FC<{}> = () => {
     const [search, setSearch] = useState("");
     const [selectedTab, setSelectedTab] = useState<TabNames>("all");
-    const [isWarningConfirmed, setWarningConfirmed] = useStorageState<boolean>(
-        "isWarningConfirmed",
-        false
-    );
+    const [isWarningConfirmed, isLoading, setWarningConfirmed] =
+        useStorageState<boolean>("isWarningConfirmed", false);
 
     const {
         shownFlags,
@@ -53,6 +51,10 @@ export const FeatureFlagsScreen: FC<{}> = () => {
     };
 
     let content: ReactNode = null;
+
+    if (isLoading) {
+        return null;
+    }
 
     if (!isWarningConfirmed) {
         return <UsageWarning onConfirm={() => setWarningConfirmed(true)} />;

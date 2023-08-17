@@ -28,9 +28,12 @@ export const Tabs: FC<Props> = ({
                     Changed Flags <CountLabel>&nbsp;{changedCount}</CountLabel>
                 </TabLabel>
             </Tab>
-            {/* <Tab onClick={() => onChange('subscriptions')}>
-                <TabLabel selected={selectedTab === 'subscriptions'}>Subscriptions <CountLabel>&nbsp;{subscriptionsCount}</CountLabel></TabLabel>
-            </Tab> */}
+            <Tab onClick={() => onChange("subscriptions")}>
+                <TabLabel selected={selectedTab === "subscriptions"}>
+                    Subscriptions{" "}
+                    <CountLabel>&nbsp;{subscriptionsCount}</CountLabel>
+                </TabLabel>
+            </Tab>
         </Container>
     );
 };

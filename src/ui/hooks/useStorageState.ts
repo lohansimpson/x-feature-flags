@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 export const useStorageState = <T>(
     key: string,
     defaultValue: T
-): [value: T, setValue: (newValue: T) => void] => {
+): [value: T, isLoading: boolean, setValue: (newValue: T) => void] => {
     const [localValue, setLocalValue] = useState<T>(defaultValue);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
+        setIsLoading(true);
         chrome.storage.local.get(key).then((res) => {
+            setIsLoading(false);
             if (res[key]) {
                 setLocalValue(res[key]);
             }
@@ -30,5 +33,5 @@ export const useStorageState = <T>(
         await chrome.storage.local.set({ [key]: newValue });
     };
 
-    return [localValue, setValue];
+    return [localValue, isLoading, setValue];
 };

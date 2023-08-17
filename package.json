@@ -1,6 +1,6 @@
 {
   "name": "x-feature-flags",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A chrome extension to modify feature flags on X.com",
   "main": "lib/background.js",
   "author": "Yaroslav https://twitter.com/512x512",
@@ -8,8 +8,8 @@
   "scripts": {
     "build": "yarn clean && webpack",
     "watch": "yarn clean && webpack -w",
-    "clean": "rm -rf ./lib/*",
-    "package": "rm -f ./extension.zip && yarn build && zip -r -X extension.zip *"
+    "clean": "rm -rf ./extension/lib/*",
+    "package": "rm -f ./extension.zip && yarn build && zip -r -X extension.zip ./extension/*"
   },
   "dependencies": {
     "react": "^18.2.0",

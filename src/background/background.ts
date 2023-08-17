@@ -2,7 +2,7 @@ chrome.scripting.registerContentScripts([
     {
         id: `isolated_context_inject_${Math.random()}`,
         matches: ["https://twitter.com/*"],
-        css: ["css/inject.css"],
+        css: ["assets/css/inject.css"],
         js: ["lib/inject.js"],
         runAt: "document_start",
     },
