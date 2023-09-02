@@ -1,4 +1,4 @@
-<img src="./assets/icons/128.png" height="128">
+<img src="./extension/assets/icons/128.png" height="128">
 
 # X Feature Flags: Chrome Extension
 
