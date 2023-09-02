@@ -1,4 +1,4 @@
-<img src="./icons/128.png" height="128">
+<img src="./assets/icons/128.png" height="128">
 
 # X Feature Flags: Chrome Extension
 
@@ -6,7 +6,7 @@ Enable upcoming X feature flags before their official release.
 
 ## Requirements
 
-To use this extension, will you need:
+To use this extension, you will need:
 
 -   X.com account
 -   Chrome or Brave browser
@@ -14,7 +14,7 @@ To use this extension, will you need:
 ## Installation from Chrome Web Store
 
 1. Open the [extension page](https://chrome.google.com/webstore/detail/secret-twitter-features/phioeneleonlckednejcmajbkmhhiepm?hl=en-GB&authuser=0) in Chrome Web Store.
-2. Press "Add to Chrome" button
+2. Press the "Add to Chrome" button
 
 ## Manual Installation
 
@@ -43,7 +43,7 @@ When you click on it, a list of available feature flags will be shown.
 
 <img src="./docs/features.png" width="600">
 
-Here you can filter by feature name and modify feature flags. If you want to reset all your changes, press the "Clear State" button in the bottom right. To exit without saving, just click outside the modal.
+Here, you can filter by feature name and modify feature flags. If you want to reset all your changes, press the "Clear State" button in the bottom right. To exit without saving, just click outside the modal.
 
 ## Which Feature Flags to Try First
 
