@@ -1,6 +1,6 @@
 {
   "name": "x-feature-flags",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A chrome extension to modify feature flags on X.com",
   "main": "lib/background.js",
   "author": "Yaroslav https://twitter.com/512x512",

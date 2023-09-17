@@ -103,6 +103,13 @@ if (subscriptionString) {
         // intercepting subscription request
         intercept_response(/GetUserClaims/g, (text: string) => {
             const json = JSON.parse(text);
+
+            if (json["data"]["viewer_v2"]["claims"].length === 0) {
+                json["data"]["viewer_v2"]["claims"].push({
+                    resources: [],
+                });
+            }
+
             let resources = json["data"]["viewer_v2"]["claims"][0][
                 "resources"
             ] as ClaimsResource[];
