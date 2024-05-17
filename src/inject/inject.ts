@@ -88,8 +88,7 @@ const menuSelector = 'a[data-testid="AppTabBar_Profile_Link"]';
 window.onload = () => {
     // waiting for left menu to appear
     const toolbarObserver = createObserver(menuSelector, onMenuAdded, () => {});
-    const reactRoot = document.querySelector("#react-root") as unknown as Node;
-    toolbarObserver.observe(reactRoot, { subtree: true, childList: true });
+    toolbarObserver.observe(document, { subtree: true, childList: true });
 
     const currentContainer = document.querySelector(menuSelector);
     if (currentContainer) {
