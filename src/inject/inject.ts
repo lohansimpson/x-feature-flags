@@ -52,6 +52,9 @@ const onMenuAdded = async (prevElement: Element) => {
     // Menu element container
     const btnContainer = document.createElement("div");
     btnContainer.classList.add("featuresBtnContainer");
+    if (prefersDarkMode) {
+        btnContainer.classList.add("dark");
+    }
     label.onclick = showModal;
 
     btnContainer.append(label);

@@ -25,7 +25,9 @@
     box-sizing: border-box;
     cursor: pointer;
     font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: all 0.1s;
 }
+
 
 .featuresLabel {
     color: rgb(15, 20, 25);
@@ -55,7 +57,8 @@
 }
 
 .featuresLabel.dark {
-    color: white;
+    color: rgba(255, 255, 255, 0.682);
+    width: 60%;
 }
 
 @media only screen and (max-width: 1300px) {
@@ -67,3 +70,6 @@
       display: none;
     }
   }
+  .featuresBtnContainer.dark:hover {
+    background-color: #333;
+}
