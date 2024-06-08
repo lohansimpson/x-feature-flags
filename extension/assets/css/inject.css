@@ -19,7 +19,7 @@
 }
 
 .featuresBtnContainer {
-    width: 100%;
+    width: 60%;
     display: flex;
     border-radius: 100px;
     box-sizing: border-box;
@@ -56,10 +56,18 @@
     background-color: rgba(15, 20, 25, 0.15); 
 }
 
-.featuresLabel.dark {
-    color: rgba(255, 255, 255, 0.682);
-    width: 60%;
+.featuresBtnContainer:active .featuresLabel.dark{
+    background-color: rgba(125, 125, 125, 0.2);  
 }
+
+
+
+
+.featuresBtnContainer:hover .featuresLabel.dark{
+    background-color: rgba(125, 125, 125, 0.2); 
+
+}
+
 
 @media only screen and (max-width: 1300px) {
     .featuresLabel {
@@ -70,6 +78,3 @@
       display: none;
     }
   }
-  .featuresBtnContainer.dark:hover {
-    background-color: #333;
-}
