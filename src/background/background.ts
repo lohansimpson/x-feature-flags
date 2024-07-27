@@ -1,3 +1,5 @@
+
+
 chrome.scripting.registerContentScripts([
     {
         id: `isolated_context_inject_${Math.random()}`,

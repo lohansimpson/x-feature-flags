@@ -12,6 +12,7 @@
     "package": "rm -f ./extension.zip && yarn build && zip -r -X extension.zip ./extension/*"
   },
   "dependencies": {
+    "prettier": "^3.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^5.3.6",
@@ -19,7 +20,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.203",
+    "@types/chrome": "^0.0.268",
     "@types/node": "^18.11.11",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",

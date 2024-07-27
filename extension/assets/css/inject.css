@@ -19,13 +19,15 @@
 }
 
 .featuresBtnContainer {
-    width: 100%;
+    width: 60%;
     display: flex;
     border-radius: 100px;
     box-sizing: border-box;
     cursor: pointer;
     font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: all 0.1s;
 }
+
 
 .featuresLabel {
     color: rgb(15, 20, 25);
@@ -54,9 +56,18 @@
     background-color: rgba(15, 20, 25, 0.15); 
 }
 
-.featuresLabel.dark {
-    color: white;
+.featuresBtnContainer:active .featuresLabel.dark{
+    background-color: rgba(125, 125, 125, 0.2);  
 }
+
+
+
+
+.featuresBtnContainer:hover .featuresLabel.dark{
+    background-color: rgba(125, 125, 125, 0.2); 
+
+}
+
 
 @media only screen and (max-width: 1300px) {
     .featuresLabel {
