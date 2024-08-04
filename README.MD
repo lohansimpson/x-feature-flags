@@ -51,4 +51,4 @@ Because X constantly updates its code, the features in testing are also changing
 
 ## Feedback
 
-If you have feedback, please send me a DM in X: [@512x512](https://twitter.com/512x512)
+If you have feedback, please send me a DM in X: [@Lohansimpson](https://x.com/Lohansimpson)
