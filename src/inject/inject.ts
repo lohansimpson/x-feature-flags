@@ -36,6 +36,7 @@ const onMenuAdded = async (prevElement: Element) => {
         ? chrome.runtime.getURL("assets/icons/tab_icon_dark_theme.svg")
         : chrome.runtime.getURL("assets/icons/tab_icon.svg");
     img.classList.add("featuresIcon");
+    
 
     // text
     const label = document.createElement("div");
