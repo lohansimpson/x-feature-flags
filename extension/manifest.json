@@ -1,7 +1,7 @@
 {
     "name": "X / Twitter Feature Flags",
     "manifest_version": 3,
-    "version": "3.1.1",
+    "version": "3.1.5",
     "description": "Modifies feature flags on X.com / Twitter.com",
     "permissions": [
       "storage",
