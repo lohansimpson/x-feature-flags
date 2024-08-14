@@ -152,3 +152,6 @@ if (subscriptionString) {
         localStorage.removeItem(SUBSCRIPTIONS_KEY);
     }
 }
+
+
+// inject_main.ts
