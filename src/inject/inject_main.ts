@@ -42,7 +42,9 @@ Object.defineProperty(window, "__INITIAL_STATE__", {
             ...__INITIAL_STATE_COPY__.featureSwitch.user.config,
             ...changes,
         };
+     
 
+        
         __INITIAL_STATE_COPY__.userClaim.config.subscriptions =
             __INITIAL_STATE_COPY__.userClaim.config.subscriptions ?? {};
         for (const s of Object.keys(subscriptions)) {

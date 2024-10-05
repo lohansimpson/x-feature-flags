@@ -107,22 +107,6 @@ chrome.runtime.onMessageExternal.addListener(
     }
 );
 
-// background.ts
-
- // Replace with the actual URL pattern
-// background.ts
-// background.ts
-
-// background.ts
-
-
-  
-  
-
-
-
-
-
 
 import rules from './rules'; 
 chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds: rules.map((rule) => rule.id), addRules: rules });
