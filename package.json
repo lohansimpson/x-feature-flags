@@ -3,7 +3,7 @@
   "version": "3.0.1",
   "description": "A chrome extension to modify feature flags on X.com",
   "main": "lib/background.js",
-  "author": "Yaroslav https://twitter.com/512x512",
+  "author": "Lohansimpson https://twitter.com/Lohansimpson",
   "license": "MIT",
   "scripts": {
     "build": "yarn clean && webpack",

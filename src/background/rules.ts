@@ -15,7 +15,7 @@ const rules: chrome.declarativeNetRequest.Rule[] = [
       ]
     },
     condition: {
-      urlFilter: '||x.com',
+      urlFilter: '||x.com/i/tv*',
       resourceTypes: allResourceTypes,
     }
   },
@@ -33,7 +33,7 @@ const rules: chrome.declarativeNetRequest.Rule[] = [
       ]
     },
     condition: {
-      urlFilter: '||x.com',
+      urlFilter: '||x.com/i/tv*',
       resourceTypes: allResourceTypes,
     }
   },

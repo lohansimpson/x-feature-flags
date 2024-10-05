@@ -1,16 +1,13 @@
 {
     "name": "X / Twitter Feature Flags",
     "manifest_version": 3,
-    "version": "3.1.6",
+    "version": "3.1.8",
     "description": "Modifies feature flags on X.com / Twitter.com",
     "permissions": [
       "storage",
       "scripting",
-      "webRequest",
-      "webRequestBlocking",
       "declarativeNetRequest",
-      "declarativeNetRequestWithHostAccess",
-      "host_permissions"
+      "declarativeNetRequestWithHostAccess"
     ],
     "host_permissions": [
       "https://twitter.com/",
