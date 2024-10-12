@@ -27,7 +27,7 @@
     },
     "web_accessible_resources": [
         {
-            "resources": ["assets/ui.html", "assets/icons/tab_icon.svg", "assets/icons/tab_icon_dark_theme.svg", "lib/ui.js"],
+            "resources": ["assets/ui.html", "assets/icons/tab_icon.svg", "assets/icons/tab_icon_dark_theme.svg", "lib/ui.js", "assets/icons/tv_icon_light.svg", "assets/icons/tv_icon_dark_theme.svg"],
             "matches": ["https://twitter.com/*", "https://x.com/*"]
         }
     ]
