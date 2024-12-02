@@ -1,5 +1,5 @@
 {
-    "name": "X / Twitter Feature Flags - Bug Crashes",
+    "name": "X / Twitter Feature Flags",
     "manifest_version": 3,
     "version": "3.1.8",
     "description": "Modifies feature flags on X.com / Twitter.com",
