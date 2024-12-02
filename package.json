@@ -9,9 +9,13 @@
     "build": "yarn clean && webpack",
     "watch": "yarn clean && webpack -w",
     "clean": "rm -rf ./extension/lib/*",
-    "package": "rm -f ./extension.zip && yarn build && zip -r -X extension.zip ./extension/*"
+    "package": "rm -f ./extension.zip && yarn build && zip -r -X extension.zip ./extension/*",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@testing-library/dom": "^10.4.0",
     "prettier": "^3.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,12 +24,20 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/chrome": "^0.0.268",
+    "@types/jest": "^29.5.14",
     "@types/node": "^18.11.11",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "ts-loader": "^9.4.2",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
