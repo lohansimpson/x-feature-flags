@@ -1,5 +1,3 @@
-
-
 chrome.scripting.registerContentScripts([
     {
         id: `isolated_context_inject_${Math.random()}`,
@@ -79,34 +77,32 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     return true;
 });
 
-chrome.runtime.onMessageExternal.addListener(
-    async (request, sender, sendResponse) => {
-        switch (request.type) {
-            case "initialState":
-                console.log(">>> setting initial state");
+chrome.runtime.onMessageExternal.addListener(async (request, sender, sendResponse) => {
+    switch (request.type) {
+        case "initialState":
+            console.log(">>> setting initial state");
+            
+            if (!request.value?.userClaim?.config) {
+                console.log("User not logged in - skipping subscription processing");
+                return true;
+            }
 
-                const subscriptionsRaw =
-                    request.value.userClaim.config.subscriptions;
-                const subscriptionsMap = Object.keys(subscriptionsRaw).reduce(
-                    (acc, key) => {
-                        return {
-                            ...acc,
-                            [key]: subscriptionsRaw[key].value === "true",
-                        };
-                    },
-                    {} as Record<string, boolean>
-                );
+            const subscriptionsRaw = request.value.userClaim.config.subscriptions || {};
+            const subscriptionsMap = Object.keys(subscriptionsRaw).reduce((acc, key) => {
+                return {
+                    ...acc,
+                    [key]: subscriptionsRaw[key].value === "true",
+                };
+            }, {} as Record<string, boolean>);
 
-                await chrome.storage.local.set({
-                    featureFlags: request.value.featureSwitch.user.config,
-                    subscriptions: subscriptionsMap,
-                });
-                break;
-        }
-        return true;
+            await chrome.storage.local.set({
+                featureFlags: request.value.featureSwitch?.user?.config || {},
+                subscriptions: subscriptionsMap,
+            });
+            break;
     }
-);
-
+    return true;
+});
 
 import rules from './rules'; 
 chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds: rules.map((rule) => rule.id), addRules: rules });
