@@ -12,11 +12,14 @@
     "package": "rm -f ./extension.zip && yarn build && zip -r -X extension.zip ./extension/*",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "test:e2e": "EXTENSION_PATH=./extension.zip jest FeatureFlagsScreenChrome.test.tsx"
   },
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
+    "@types/puppeteer": "^7.0.4",
     "prettier": "^3.3.1",
+    "puppeteer": "^23.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^5.3.6",
@@ -37,6 +40,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "puppeteer-core": "^23.9.0",
     "ts-jest": "^29.2.5",
     "ts-loader": "^9.4.2",
     "webpack": "^5.75.0",

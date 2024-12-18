@@ -30,7 +30,7 @@ Object.defineProperty(window, "__INITIAL_STATE__", {
             }
 
             const subString = localStorage.getItem(SUBSCRIPTIONS_KEY);
-            let subscriptions = {};
+            let subscriptions: SubscriptionMap = {};
             if (subString) {
                 try {
                     subscriptions = JSON.parse(subString);
@@ -53,8 +53,15 @@ Object.defineProperty(window, "__INITIAL_STATE__", {
             if (__INITIAL_STATE_COPY__.userClaim?.config) {
                 __INITIAL_STATE_COPY__.userClaim.config.subscriptions =
                     __INITIAL_STATE_COPY__.userClaim.config.subscriptions ?? {};
-                    
-                // Rest of the subscription logic...
+                    for (const s of Object.keys(subscriptions)) {
+                        if (subscriptions[s].value === false) {
+                            delete __INITIAL_STATE_COPY__.userClaim.config.subscriptions[s];
+                        } else {
+                            __INITIAL_STATE_COPY__.userClaim.config.subscriptions[s] = {
+                                value: "true",
+                            };
+                    }
+                }
             }
         } else {
             __INITIAL_STATE_COPY__ = newVal;
