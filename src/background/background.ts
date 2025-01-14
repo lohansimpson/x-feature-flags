@@ -40,8 +40,8 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             try {
                 const json = await (
                     await fetch(
-                        "https://twitter-feature-flags.web.app/flags.json",
-                        { cache: "no-store" }
+                        "https://x-flags.msoftwarecorp.com/flags.json",
+                        { cache: "no-store", headers: { "x-feature-flags-extension": "true" } }
                     )
                 ).json();
                 await chrome.storage.local.set({
@@ -55,8 +55,12 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
             try {
                 const json: Array<{ name: string; value: string }> = await (
                     await fetch(
-                        "https://twitter-feature-flags.web.app/subscriptions.json",
-                        { cache: "no-store" }
+                        "https://x-flags.msoftwarecorp.com/subscriptions.json",
+                        { cache: "no-store",
+                            headers: {
+                                "x-feature-flags-extension": "true",
+                            },
+                        }
                     )
                 ).json();
 

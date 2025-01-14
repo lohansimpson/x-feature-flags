@@ -1,7 +1,7 @@
 {
-    "name": "X / Twitter Feature Flags",
+    "name": "X / Twitter Feature Flags - new api Dev",
     "manifest_version": 3,
-    "version": "3.1.8",
+    "version": "3.1.9",
     "description": "Modifies feature flags on X.com / Twitter.com",
     "permissions": [
       "storage",

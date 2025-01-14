@@ -10,3 +10,5 @@ node_modules/
 *.zip
 
 extension/lib/
+.aider*
+.env
