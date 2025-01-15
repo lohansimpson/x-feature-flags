@@ -92,7 +92,7 @@ export const FeatureFlagsScreen: FC<{}> = () => {
 
     return (
         <Container data-testid="feature-flags-screen">
-            <Header style={{ borderBottom: "1px solid rgba(0,0,0,0.05);" }}>
+            <Header style={{ borderBottom: "1px solid rgba(0,0,0,0.05)" }}>
                 <Search initialValue={search} onChange={setSearch} />
                 <Tabs
                     allCount={Object.keys(shownFlags).length}
