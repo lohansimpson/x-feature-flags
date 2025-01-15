@@ -55,6 +55,7 @@ const requiredCookies = [
   "Guest_id_ads",
   "Guest_id"
 ];
+console.log(process.env.AUTH_TOKEN);
 
 // Validate cookies before creating array
 requiredCookies.forEach(cookieName => {
