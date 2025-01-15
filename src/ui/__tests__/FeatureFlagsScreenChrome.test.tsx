@@ -44,18 +44,28 @@ const createCookie = (name: string, value: string) => ({
   url: 'https://x.com',
 });
 
-// Simplify cookies array to test with fewer cookies first
-const cookies = [
-  createCookie('auth_token', process.env["auth_token"]!,),
-  createCookie('ct0', process.env["ct0"]!,),
-  createCookie('twid', process.env["twid"]!,),
-  createCookie('personalization_id', process.env["personalization_id"]!,),
-  createCookie('kdt', process.env["kdt"]!,),
-  createCookie('guest_id_marketing', process.env["guest_id_marketing"]!,),
-  createCookie('guest_id_ads', process.env["guest_id_ads"]!,),
-  createCookie('guest_id', process.env["guest_id"]!,),
-
+// Add validation for environment variables
+const requiredCookies = [
+  "auth_token",
+  "ct0",
+  "twid",
+  "personalization_id",
+  "kdt",
+  "guest_id_marketing",
+  "guest_id_ads",
+  "guest_id"
 ];
+
+// Validate cookies before creating array
+requiredCookies.forEach(cookieName => {
+  if (!process.env[cookieName]) {
+    throw new Error(`Missing required environment variable: ${cookieName}`);
+  }
+});
+
+const cookies = requiredCookies.map(name => 
+  createCookie(name, process.env[name]!)
+);
 
 
 
@@ -158,8 +168,10 @@ describe('FeatureFlagsScreen Chrome Tests', () => {
     
 
     it('should load extension on X.com', async () => {
-      // Set cookies
-      await page.setCookie(...cookies);
+      // Set cookies one by one instead of all at once
+      for (const cookie of cookies) {
+        await page.setCookie(cookie);
+      }
     
 
     
