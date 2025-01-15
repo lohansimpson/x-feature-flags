@@ -29,6 +29,15 @@ jobs:
       run: yarn build
     
     - name: Run tests
+      env:
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+          CT0: ${{ secrets.CT0 }}
+          TWID: ${{ secrets.TWID }}
+          PERSONALIZATION_ID: ${{ secrets.PERSONALIZATION_ID }}
+          KDT: ${{ secrets.KDT }}
+          GUEST_ID_MARKETING: ${{ secrets.GUEST_ID_MARKETING }}
+          GUEST_ID_ADS: ${{ secrets.GUEST_ID_ADS }}
+          GUEST_ID: ${{ secrets.GUEST_ID }}
       run: yarn test --coverage
   
     
