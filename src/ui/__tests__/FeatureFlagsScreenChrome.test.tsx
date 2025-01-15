@@ -44,21 +44,28 @@ const createCookie = (name: string, value: string) => ({
   url: 'https://x.com',
 });
 
-// Simplify cookies array to test with fewer cookies first
-const cookies = [
-  createCookie('AUTH_TOKEN', process.env["auth_token"]!,),
-  createCookie('CT0', process.env["ct0"]!,),
-  createCookie('Twid', process.env["twid"]!,),
-  createCookie('Personalization_id', process.env["personalization_id"]!,),
-  createCookie('Kdt', process.env["kdt"]!,),
-  createCookie('Guest_id_marketing', process.env["guest_id_marketing"]!,),
-  createCookie('guest_id_ads', process.env["guest_id_ads"]!,),
-  createCookie('Guest_id', process.env["guest_id"]!,),
+// Add validation for environment variables
+const requiredCookies = [
+  "AUTH_TOKEN",
+  "CT0",
+  "Twid",
+  "Personalization_id",
+  "Kdt",
+  "Guest_id_marketing",
+  "Guest_id_ads",
+  "Guest_id"
+];
 
-];  
+// Validate cookies before creating array
+requiredCookies.forEach(cookieName => {
+  if (!process.env[cookieName]) {
+    throw new Error(`Missing required environment variable: ${cookieName}`);
+  }
+});
 
-
-
+const cookies = requiredCookies.map(name => 
+  createCookie(name.toLowerCase(), process.env[name]!)
+);
 
 // ... existing chrome mock and describe block ...
 describe('FeatureFlagsScreen Chrome Tests', () => { 
@@ -158,8 +165,10 @@ describe('FeatureFlagsScreen Chrome Tests', () => {
     
 
     it('should load extension on X.com', async () => {
-      // Set cookies
-      await page.setCookie(...cookies);
+      // Set cookies one by one instead of all at once
+      for (const cookie of cookies) {
+        await page.setCookie(cookie);
+      }
     
 
     
