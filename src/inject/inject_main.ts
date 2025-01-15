@@ -161,5 +161,3 @@ if (subscriptionString) {
     }
 }
 
-
-// inject_main.ts

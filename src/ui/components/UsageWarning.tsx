@@ -8,7 +8,7 @@ type Props = {
 
 export const UsageWarning: FC<Props> = ({ onConfirm }) => {
     return (
-        <Container>
+        <Container data-testid="usage-warning">
             <Title>☢️ Use this extension at your own risk ☢️</Title>
             Changing feature flags can activate work-in-progress features,
             however they are usually incomplete, can include bugs and might

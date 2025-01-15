@@ -8,10 +8,12 @@ module.exports = {
   },
   setupFilesAfterEnv: ['<rootDir>/src/tests/setupTests.ts'],
   testPathIgnorePatterns: ['/node_modules/', '/extension/'],
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest'
+  },
   globals: {
     'ts-jest': {
       tsconfig: 'tsconfig.json'
-    },
-    
+    }
   }
 }; 

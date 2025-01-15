@@ -57,7 +57,7 @@ export const FeatureFlagsScreen: FC<{}> = () => {
     }
 
     if (!isWarningConfirmed) {
-        return <UsageWarning onConfirm={() => setWarningConfirmed(true)} />;
+        return <UsageWarning data-testid="feature-flags-screen" onConfirm={() => setWarningConfirmed(true)} />;
     }
 
     switch (selectedTab) {
