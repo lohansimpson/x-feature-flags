@@ -24,12 +24,13 @@ jobs:
     
     - name: Type check
       run: yarn tsc --noEmit
+
+    - name: build
+      run: yarn build
     
     - name: Run tests
       run: yarn test --coverage
-    
-    - name: Build extension
-      run: yarn build
+  
     
 
     - name: Upload build artifacts
