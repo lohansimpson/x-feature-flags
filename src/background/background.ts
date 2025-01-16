@@ -79,27 +79,29 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
 
 chrome.runtime.onMessageExternal.addListener(async (request, sender, sendResponse) => {
     switch (request.type) {
-        case "initialState":
+        case "initialState": {
             console.log(">>> setting initial state");
             
             if (!request.value?.userClaim?.config) {
-                console.log("User not logged in - skipping subscription processing");
+                console.warn("Initialization skipped:", {
+                    reason: "Missing user configuration",
+                    value: request.value
+                });
                 return true;
             }
 
             const subscriptionsRaw = request.value.userClaim.config.subscriptions || {};
-            const subscriptionsMap = Object.keys(subscriptionsRaw).reduce((acc, key) => {
-                return {
-                    ...acc,
-                    [key]: subscriptionsRaw[key].value === "true",
-                };
-            }, {} as Record<string, boolean>);
+            const subscriptionsMap: Record<string, boolean> = {};
+            for (const key of Object.keys(subscriptionsRaw)) {
+                subscriptionsMap[key] = subscriptionsRaw[key].value === "true";
+            }
 
             await chrome.storage.local.set({
                 featureFlags: request.value.featureSwitch?.user?.config || {},
                 subscriptions: subscriptionsMap,
             });
             break;
+        }
     }
     return true;
 });

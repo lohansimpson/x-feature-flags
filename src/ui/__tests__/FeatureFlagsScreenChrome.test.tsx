@@ -189,8 +189,7 @@ describe('FeatureFlagsScreen Chrome Tests', () => {
       // Verify feature flags interface is visible
       const featureFlagsElement = await page.evaluate(() => {
         const element = document.querySelector('[data-testid="usage-warning"]');
-        if (!element) return true;
-        return false;
+        return !!element;
       });
       expect(featureFlagsElement).toBeTruthy();
     }, 80000); // Increase timeout for E2E test
