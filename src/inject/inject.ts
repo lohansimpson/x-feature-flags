@@ -35,6 +35,7 @@ const closeModal = () => {
     background?.remove();
 };
 
+ // Check if the feature flag is enabled for new UI
 const isFeatureFlagEnabled = () => {
     try {
         const changes = localStorage.getItem("stf_changes");
@@ -52,10 +53,21 @@ const isFeatureFlagEnabled = () => {
     } catch (e) {
         console.error("Error checking feature flag:", e);
     }
-    return true;
+    return false;
 };
 
 const onMenuAdded = async (prevElement: Element) => {
+
+      // Inject CSS to hide button in modal
+      const style = document.createElement('style');
+      style.textContent = `
+          [aria-modal="true"] .featuresBtnContainer {
+              display: none !important;
+          }
+      `;
+      document.head.appendChild(style);
+
+     // Check if the button container already exists
     const alreadyExists = !!prevElement.parentElement!.querySelector(
         ".featuresBtnContainer"
     );
