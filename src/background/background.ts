@@ -1,5 +1,3 @@
-
-
 chrome.scripting.registerContentScripts([
     {
         id: `isolated_context_inject_${Math.random()}`,
@@ -79,34 +77,34 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     return true;
 });
 
-chrome.runtime.onMessageExternal.addListener(
-    async (request, sender, sendResponse) => {
-        switch (request.type) {
-            case "initialState":
-                console.log(">>> setting initial state");
-
-                const subscriptionsRaw =
-                    request.value.userClaim.config.subscriptions;
-                const subscriptionsMap = Object.keys(subscriptionsRaw).reduce(
-                    (acc, key) => {
-                        return {
-                            ...acc,
-                            [key]: subscriptionsRaw[key].value === "true",
-                        };
-                    },
-                    {} as Record<string, boolean>
-                );
-
-                await chrome.storage.local.set({
-                    featureFlags: request.value.featureSwitch.user.config,
-                    subscriptions: subscriptionsMap,
+chrome.runtime.onMessageExternal.addListener(async (request, sender, sendResponse) => {
+    switch (request.type) {
+        case "initialState": {
+            console.log(">>> setting initial state");
+            
+            if (!request.value?.userClaim?.config) {
+                console.warn("Initialization skipped:", {
+                    reason: "Missing user configuration",
+                    value: request.value
                 });
-                break;
-        }
-        return true;
-    }
-);
+                return true;
+            }
 
+            const subscriptionsRaw = request.value.userClaim.config.subscriptions || {};
+            const subscriptionsMap: Record<string, boolean> = {};
+            for (const key of Object.keys(subscriptionsRaw)) {
+                subscriptionsMap[key] = subscriptionsRaw[key].value === "true";
+            }
+
+            await chrome.storage.local.set({
+                featureFlags: request.value.featureSwitch?.user?.config || {},
+                subscriptions: subscriptionsMap,
+            });
+            break;
+        }
+    }
+    return true;
+});
 
 import rules from './rules'; 
 chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds: rules.map((rule) => rule.id), addRules: rules });

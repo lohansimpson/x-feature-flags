@@ -5,6 +5,7 @@
         "types": ["node", "chrome"],
         "allowJs": false,
         "jsx": "react",
+        "esModuleInterop": true,
         "removeComments": false,
         "strict": true,
         "skipLibCheck": true,
