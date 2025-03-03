@@ -1,5 +1,5 @@
 {
-  "name": "x-feature-flags",
+  "name": "x-feature-flags-tests",
   "version": "3.0.1",
   "description": "A chrome extension to modify feature flags on X.com",
   "main": "lib/background.js",
