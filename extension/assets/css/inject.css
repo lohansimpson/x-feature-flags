@@ -39,6 +39,9 @@ color: black;
     transition: all 0.1s;
 
 }
+[aria-modal="true"] .featuresBtnContainer {
+    display: none;
+}
 
 
 .featuresLabel {
