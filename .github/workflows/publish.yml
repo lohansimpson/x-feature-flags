@@ -1,7 +1,7 @@
-
 name: Publish
 
 on:
+  workflow_dispatch:
   push:
     tags:
       # expected format: <package>@<version> (example: socket.io@1.2.3)
@@ -11,13 +11,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{github.ref}}
       - uses: actions/setup-node@v3
         with:
           node-version: 18
 
       - name: Install dependencies
         run: yarn install
+
+      - name: Refresh Chrome Web Store token
+        run: node scripts/refresh-token.js
+        env:
+          CLIENT: ${{ secrets.CLIENT_ID }}
+          SECRET: ${{ secrets.CLIENT_SECRET }}
+          TOKEN: ${{ secrets.R_TOKEN_CHROME }}
 
       - name: Build zip file
         run: yarn package
@@ -26,8 +35,8 @@ jobs:
         uses: mobilefirstllc/cws-publish@latest
         with:
           action: 'upload' 
-          client_id: ${{ secrets.CLIENT }}
-          client_secret: ${{ secrets.SECRET }}
-          refresh_token: ${{ secrets.TOKEN }}
+          client_id: ${{ secrets.CLIENT_ID }}
+          client_secret: ${{ secrets.CLIENT_SECRET }}
+          refresh_token: ${{ env.TOKEN }}
           extension_id: ${{ secrets.EXTENSION_ID }}
           zip_file: 'extension.zip'
